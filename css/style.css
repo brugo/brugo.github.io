@@ -692,6 +692,10 @@ html.reduced .reel-stage, html.no-js .reel-stage { display: flex; flex-direction
 .contact-links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 7vh; }
 .pill { display: inline-block; padding: 14px 22px; border-radius: 999px; border: 1px solid var(--line); font: 500 14px var(--mono); transition: background .3s, color .3s, border-color .3s; }
 .pill:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.pill-wa { display: inline-flex; align-items: center; gap: 10px; background: #25d366; border-color: #25d366; color: #07240f; font-weight: 600; }
+.pill-wa:hover { background: #1ebe5b; border-color: #1ebe5b; color: #07240f; }
+.wa-icon { width: 18px; height: 18px; fill: currentColor; flex: none; }
+.pill-sub { font-weight: 400; opacity: .75; }
 .footer {
   margin-top: auto; padding-top: 16vh;
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 30px;

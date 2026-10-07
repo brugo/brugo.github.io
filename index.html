@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Humberto Ferrante · Game Developer</title>
+  <meta name="description" content="Portfolio of Humberto Ferrante, game developer and technical lead: a co-op browser card game, kids' games in Godot and Unity, a squishy 3D character and a VR world for a non-profit.">
+  <meta name="theme-color" content="#0b0a0e">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Humberto Ferrante · Game Developer">
+  <meta property="og:description" content="Card games, cozy kids' games, squishy 3D characters and a VR world, designed and directed by Humberto Ferrante.">
+  <meta property="og:image" content="https://brugo.github.io/media/og.jpg">
+  <meta property="og:url" content="https://brugo.github.io/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function () {
+      var html = document.documentElement, pref = null;
+      html.classList.replace('no-js', 'js');
+      try { pref = localStorage.getItem('motion'); } catch (e) {}
+      var osReduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (pref ? pref === 'off' : osReduce) html.classList.add('reduced');
+      if (!pref && osReduce) html.classList.add('os-reduced');
+      setTimeout(function () { if (!window.__motionReady) html.classList.add('reduced'); }, 5000);
+    })();
+  </script>
+  <script type="importmap">{"imports":{"three":"./js/vendor/three/three.module.min.js","three/addons/":"./js/vendor/three/addons/"}}</script>
+</head>
+<body>
+  <a class="skip" href="#work">Skip to work</a>
+
+  <div class="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <span class="loader-mark">HF</span>
+      <span class="loader-count"><span class="loader-num">0</span>%</span>
+    </div>
+    <div class="loader-bar"><span></span></div>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"><div class="cursor-ring"><span class="cursor-label"></span></div><div class="cursor-dot"></div></div>
+
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="Humberto Ferrante, back to top"><span class="brand-hf">HF</span><span class="brand-full">Humberto Ferrante</span></a>
+    <nav aria-label="Main">
+      <a href="#work" data-magnetic>Work</a>
+      <a href="#process" data-magnetic>Process</a>
+      <a href="#about" data-magnetic>About</a>
+      <a href="#contact" class="nav-cta" data-magnetic>Contact</a>
+      <button class="motion-toggle" type="button" aria-pressed="true" data-magnetic><span class="mt-dot"></span><span class="mt-label">Motion on</span></button>
+    </nav>
+  </header>
+  <div class="motion-note" role="status" hidden>
+    <span>Animations are reduced to match your system setting.</span>
+    <button type="button" class="mn-on">Turn motion on</button>
+    <button type="button" class="mn-close" aria-label="Keep reduced motion">Keep it calm</button>
+  </div>
+  <div class="progress" aria-hidden="true"><span></span></div>
+  <aside class="chapter-tag" aria-hidden="true"><span class="ct-num">00</span><span class="ct-line"></span><span class="ct-name">Intro</span></aside>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section id="top" class="hero" data-theme="ink" data-chapter="00" data-name="Intro">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <h1 class="hero-title">
+        <span class="hero-line hl-1"><span class="hero-word" data-split>Humberto</span></span>
+        <span class="hero-line hl-2"><span class="hero-word outline" data-split>Ferrante</span></span>
+        <span class="visually-hidden"> — game developer and technical lead</span>
+      </h1>
+      <div class="hero-stage">
+        <div class="hero-pop">
+          <img class="hero-poster" src="media/dmp-portrait-s.webp" alt="" width="600" height="600">
+          <canvas id="dumpling" tabindex="0" role="img" aria-label="A squishy 3D dumpling character. Press and hold to squish it, drag to spin it, press Space to make it jump."></canvas>
+          <div class="hero-particles" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="hero-ui">
+        <div class="hero-meta">
+          <p class="hero-role"><span class="dot"></span>Game developer &amp; technical lead</p>
+          <p class="hero-lede">I design games, write the specs and direct AI&#8209;assisted builds. Then I test every release.</p>
+        </div>
+        <p class="hero-hint"><span class="hint-key">Press &amp; hold</span> <span class="hint-text">the dumpling. It's a real-time model from my character study.</span></p>
+        <a class="scroll-cue" href="#work" aria-label="Scroll to work"><span>Scroll</span><i></i></a>
+      </div>
+    </section>
+
+    <!-- ============ REEL (fly-through) ============ -->
+    <section id="work" class="reel" data-theme="ink" data-chapter="00" data-name="Selected work">
+      <div class="reel-stage">
+        <div class="reel-world">
+          <figure class="reel-item" data-x="-0.30" data-y="-0.18" data-z="-500"><img src="media/aeh-card-guardiao.webp" alt="" loading="lazy" width="520" height="650"></figure>
+          <figure class="reel-item wide" data-x="0.27" data-y="0.16" data-z="-900"><img src="media/bis-garden-s.webp" alt="" loading="lazy" width="576" height="360"></figure>
+          <figure class="reel-item wide" data-x="-0.24" data-y="0.22" data-z="-1400"><img src="media/mimo-close-pearl-s.webp" alt="" loading="lazy" width="640" height="400"></figure>
+          <div class="reel-word" data-z="-1900"><span>Card games</span></div>
+          <figure class="reel-item wide" data-x="0.29" data-y="-0.2" data-z="-2300"><img src="media/aeh-table-s.webp" alt="" loading="lazy" width="800" height="450"></figure>
+          <figure class="reel-item wide" data-x="-0.3" data-y="-0.04" data-z="-2800"><img src="media/bis-restaurant-s.webp" alt="" loading="lazy" width="576" height="360"></figure>
+          <figure class="reel-item" data-x="0.22" data-y="0.22" data-z="-3200"><img src="media/aeh-card-oraculo.webp" alt="" loading="lazy" width="520" height="867"></figure>
+          <div class="reel-word" data-z="-3700"><span>Cozy kitchens</span></div>
+          <figure class="reel-item wide" data-x="-0.27" data-y="0.2" data-z="-4100"><img src="media/bis-cows-s.webp" alt="" loading="lazy" width="640" height="400"></figure>
+          <figure class="reel-item wide" data-x="0.28" data-y="-0.16" data-z="-4500"><img src="media/mimo-r5-reveal-s.webp" alt="" loading="lazy" width="640" height="400"></figure>
+          <figure class="reel-item square" data-x="-0.22" data-y="-0.22" data-z="-5000"><img src="media/dmp-portrait-s.webp" alt="" loading="lazy" width="600" height="600"></figure>
+          <div class="reel-word" data-z="-5500"><span>Squishy 3D</span></div>
+          <figure class="reel-item wide" data-x="0.27" data-y="0.18" data-z="-5900"><img src="media/mimo-friends-s.webp" alt="" loading="lazy" width="452" height="400"></figure>
+          <figure class="reel-item wide" data-x="-0.28" data-y="-0.14" data-z="-6300"><img src="media/aeh-throne-s.webp" alt="" loading="lazy" width="768" height="512"></figure>
+          <figure class="reel-item" data-x="0.24" data-y="-0.2" data-z="-6700"><img src="media/aeh-card-samurai.webp" alt="" loading="lazy" width="520" height="594"></figure>
+          <figure class="reel-item wide" data-x="-0.26" data-y="0.2" data-z="-7100"><img src="media/mimo-close-squish-s.webp" alt="" loading="lazy" width="640" height="400"></figure>
+          <div class="reel-word" data-z="-7600"><span>VR worlds</span></div>
+          <figure class="reel-item wide" data-x="0.28" data-y="0.14" data-z="-8000"><img src="media/bis-bakery-s.webp" alt="" loading="lazy" width="640" height="400"></figure>
+          <figure class="reel-item wide" data-x="-0.27" data-y="-0.18" data-z="-8400"><img src="media/mimo-park-s.webp" alt="" loading="lazy" width="640" height="542"></figure>
+        </div>
+        <div class="reel-final">
+          <p class="eyebrow">Selected work · 2024 – 2026</p>
+          <h2 class="reel-title" data-split>Five projects.<br><em>A card game, two kids' games, a squishy character and a VR world.</em></h2>
+        </div>
+        <div class="reel-tc" aria-hidden="true"><span class="rec"></span>REEL <span class="tc">00:00:00:00</span></div>
+      </div>
+    </section>
+
+    <!-- ============ 01 · A ERA DOS HERÓIS ============ -->
+    <section class="chapter aeh" data-theme="aeh" data-chapter="01" data-name="A Era dos Heróis" aria-labelledby="aeh-title">
+      <div class="ch-intro aeh-intro">
+        <div class="ch-intro-bg"><img src="media/aeh-battle.webp" srcset="media/aeh-battle-s.webp 800w, media/aeh-battle.webp 1600w" sizes="100vw" alt="" loading="lazy" width="1600" height="900"></div>
+        <div class="ch-intro-shade"></div>
+        <div class="ch-intro-copy">
+          <p class="eyebrow"><span class="ch-num">01</span> Co-op card game · Browser · Alpha</p>
+          <h2 id="aeh-title" class="ch-title" data-split>A Era dos Heróis</h2>
+          <p class="ch-translation">“The Age of Heroes”</p>
+          <p class="ch-lede" data-reveal>A co-operative card game for up to four players that runs in the browser, with nothing to install. The heroes all act at the same time, against a dungeon that follows its own rules and hits back on its own.</p>
+          <div class="ch-actions" data-reveal>
+            <a class="btn btn-solid" href="https://a-era-dos-herois.pages.dev/" target="_blank" rel="noopener" data-magnetic data-cursor="Play">Play the alpha <span aria-hidden="true">↗</span></a>
+            <span class="btn-note">Sign-in required</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ring-section">
+        <div class="ring-stage">
+          <div class="ring-copy">
+            <p class="eyebrow">The party</p>
+            <h3 class="sec-heading ring-heading" data-split>No hero does everything.</h3>
+            <p data-reveal>Each hero has its own deck, an Ultimate, a mechanic nobody else has, and often a resource only they build up. The party covers the gaps.</p>
+          </div>
+          <div class="ring-viewport">
+            <div class="ring" role="list" aria-label="Playable heroes">
+              <div class="ring-card" role="listitem" data-name="Sir. Donovan de Valmont" data-role="Guardian · Tank" data-res="Battle Charge"><div class="rc-face"><img src="media/aeh-card-guardiao.webp" alt="Sir. Donovan de Valmont, the Guardian" loading="lazy" width="520" height="650"></div><div class="rc-back"></div><div class="rc-shade"></div></div>
+              <div class="ring-card" role="listitem" data-name="Niely Aurora" data-role="Cleric · Healer &amp; support" data-res="Overheal &amp; Grace"><div class="rc-face"><img src="media/aeh-card-oraculo.webp" alt="Niely Aurora, the Cleric" loading="lazy" style="object-position:50% 25%" width="520" height="867"></div><div class="rc-back"></div><div class="rc-shade"></div></div>
+              <div class="ring-card" role="listitem" data-name="Elerion Raizeterna" data-role="Scout · Damage" data-res="Pure, simple damage"><div class="rc-face"><img src="media/aeh-card-batedor.webp" alt="Elerion Raizeterna, the Scout" loading="lazy" width="520" height="650"></div><div class="rc-back"></div><div class="rc-shade"></div></div>
+              <div class="ring-card" role="listitem" data-name="Vince the Arcanist" data-role="Arcanist · Damage, control &amp; support" data-res="Arcane Marks"><div class="rc-face"><img src="media/aeh-card-mago.webp" alt="Vince the Arcanist" loading="lazy" width="520" height="650"></div><div class="rc-back"></div><div class="rc-shade"></div></div>
+              <div class="ring-card" role="listitem" data-name="Runaman Sangrune" data-role="Battle Lord · Damage" data-res="Life Sacrifice"><div class="rc-face"><img src="media/aeh-card-warlock.webp" alt="Runaman Sangrune, the Battle Lord" loading="lazy" width="520" height="650"></div><div class="rc-back"></div><div class="rc-shade"></div></div>
+              <div class="ring-card" role="listitem" data-name="Joseph McLoad" data-role="Gunslinger · Damage" data-res="Cold Blood"><div class="rc-face"><img src="media/aeh-card-cowboy.webp" alt="Joseph McLoad, the Gunslinger" loading="lazy" width="520" height="650"></div><div class="rc-back"></div><div class="rc-shade"></div></div>
+              <div class="ring-card" role="listitem" data-name="Lucius PallaxS III" data-role="Paladin · Damage &amp; support" data-res="Smite"><div class="rc-face"><img src="media/aeh-card-pallaxs.webp" alt="Lucius PallaxS III, the Paladin" loading="lazy" width="520" height="394"></div><div class="rc-back"></div><div class="rc-shade"></div></div>
+              <div class="ring-card" role="listitem" data-name="Hyshiro Yamazaki" data-role="Ronin samurai · Damage &amp; self-defence" data-res="Ki"><div class="rc-face"><img src="media/aeh-card-samurai.webp" alt="Hyshiro Yamazaki, the Ronin samurai" loading="lazy" width="520" height="594"></div><div class="rc-back"></div><div class="rc-shade"></div></div>
+              <div class="ring-card" role="listitem" data-name="Faelynn Terralma" data-role="Druid · Damage &amp; tank" data-res="Wild Forms"><div class="rc-face"><img src="media/aeh-card-druida.webp" alt="Faelynn Terralma, the Druid" loading="lazy" width="520" height="347"></div><div class="rc-back"></div><div class="rc-shade"></div></div>
+              <div class="ring-card" role="listitem" data-name="Lithien Passombra" data-role="Stalker · Damage &amp; control" data-res="Stealth &amp; trap control"><div class="rc-face"><img src="media/aeh-card-assassino.webp" alt="Lithien Passombra, the Stalker" loading="lazy" width="520" height="293"></div><div class="rc-back"></div><div class="rc-shade"></div></div>
+              <div class="ring-card" role="listitem" data-name="Rufius Bailalunna" data-role="Bard · Support &amp; buffs" data-res="Musical Notes"><div class="rc-face"><img src="media/aeh-card-bardo.webp" alt="Rufius Bailalunna, the Bard" loading="lazy" width="520" height="578"></div><div class="rc-back"></div><div class="rc-shade"></div></div>
+              <div class="ring-card" role="listitem" data-name="Chi Won" data-role="Monk · Damage &amp; control" data-res="Chi &amp; combos"><div class="rc-face"><img src="media/aeh-card-monge.webp" alt="Chi Won, the Monk" loading="lazy" width="443" height="544"></div><div class="rc-back"></div><div class="rc-shade"></div></div>
+              <div class="ring-card" role="listitem" data-name="Vox Magnum" data-role="Northern barbarian · Damage" data-res="Fury"><div class="rc-face"><img src="media/aeh-card-barbaro.webp" alt="Vox Magnum, the Northern barbarian" loading="lazy" width="520" height="780"></div><div class="rc-back"></div><div class="rc-shade"></div></div>
+            </div>
+          </div>
+          <div class="ring-info" aria-live="polite">
+            <span class="ri-role">Guardian · Tank</span>
+            <span class="ri-name">Sir. Donovan de Valmont</span>
+            <span class="ri-res"><i>Resource</i> <b>Battle Charge</b></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen-section">
+        <div class="screen-copy">
+          <p class="eyebrow">At the table</p>
+          <h3 class="sec-heading" data-split>You against the dungeon.</h3>
+        </div>
+        <div class="screen-wrap">
+          <div class="screen-tilt"><div class="screen" data-cursor="View">
+            <img src="media/aeh-table.webp" srcset="media/aeh-table-s.webp 800w, media/aeh-table.webp 1600w" sizes="(min-width: 900px) 80vw, 100vw" alt="The game table during a training match: two heroes on the left, an enemy card in the centre, the active trap on the right and a hand of cards at the bottom." loading="lazy" width="1600" height="900">
+            <div class="screen-glare"></div>
+          </div></div>
+          <ul class="callouts">
+            <li class="callout c1"><b>Threat</b> Every point of Energy the party burns raises the room's threat level.</li>
+            <li class="callout c2"><b>Traps</b> A new trap takes over each round and changes the rules for everyone.</li>
+            <li class="callout c3"><b>Area attacks</b> Monsters hit every living hero at once. Taunt, Shield and healing decide who stays up.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="facts aeh-facts">
+        <div class="fact"><span class="fact-num"><span data-count="4">4</span></span><span class="fact-label">players, co-op, plus a solo mode</span></div>
+        <div class="fact"><span class="fact-num"><span data-count="275">275</span></span><span class="fact-label">hero cards</span></div>
+        <div class="fact"><span class="fact-num"><span data-count="8">8</span>+1</span><span class="fact-label">rooms to the boss, who fights in phases</span></div>
+        <div class="fact"><span class="fact-num"><span data-count="9">9</span></span><span class="fact-label">traps</span></div>
+        <div class="fact"><span class="fact-num">0</span><span class="fact-label">servers in the match: peer-to-peer over WebRTC, hosted in the room creator's browser</span></div>
+      </div>
+      <p class="ai-note"><span class="ai-tag">Credits &amp; AI</span> Co-created with Neto. The card and dungeon art was generated with AI from the authors' own ideas, as the game itself says.</p>
+    </section>
+
+    <!-- ============ 02 · BISTRÔ DOS PEQUENOS ============ -->
+    <section class="chapter bis" data-theme="bis" data-chapter="02" data-name="Bistrô dos Pequenos" aria-labelledby="bis-title">
+      <div class="ch-head">
+        <p class="eyebrow"><span class="ch-num">02</span> Kids' restaurant &amp; farm game · Godot · v0.9.0</p>
+        <h2 id="bis-title" class="ch-title" data-split>Bistrô dos Pequenos</h2>
+        <p class="ch-translation">“The Little Ones' Bistro”</p>
+        <p class="ch-lede" data-reveal>Children grow ingredients on the farm, invent a menu and serve three seats shared by six rotating animal customers. There are no order timers and no character to steer. Coins from customers pay for supplies and workshop machines.</p>
+      </div>
+
+      <div class="expand-section">
+        <div class="expand-stage">
+          <div class="expand-media" data-cursor="Watch">
+            <video class="lazy-video" muted loop playsinline preload="none" poster="media/bis-farm-poster.webp" data-src="media/bis-farm.mp4" aria-label="Gameplay clip: planting, caring for cows and baking on the farm"></video>
+          </div>
+          <div class="expand-caption">
+            <span class="eyebrow">In game</span>
+            <p class="expand-quote">Da fazenda à mesa</p>
+            <p class="expand-sub">From farm to table: plant, brush the cows, knead the dough.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hgallery">
+        <div class="hg-stage">
+          <div class="hg-track">
+            <div class="hg-intro">
+              <p class="eyebrow">The loop</p>
+              <h3 class="sec-heading" data-split>Grow it, make it, serve it.</h3>
+              <p class="hg-hint" aria-hidden="true">Keep scrolling <span>→</span></p>
+            </div>
+            <figure class="hg-panel"><div class="hg-img"><img src="media/bis-garden.webp" srcset="media/bis-garden-s.webp 576w, media/bis-garden.webp 1152w" sizes="(min-width: 900px) 52vw, 86vw" alt="Vegetable garden with six plots, seed packets and tools" loading="lazy" width="1152" height="720"></div><figcaption><span>01</span> Garden. Dig, sow, water, harvest.</figcaption></figure>
+            <figure class="hg-panel"><div class="hg-img"><img src="media/bis-cows.webp" srcset="media/bis-cows-s.webp 640w, media/bis-cows.webp 1280w" sizes="(min-width: 900px) 52vw, 86vw" alt="Two cows named Amora and Mel with milk pails" loading="lazy" width="1280" height="800"></div><figcaption><span>02</span> Cows. Brush, feed and collect the milk.</figcaption></figure>
+            <figure class="hg-panel"><div class="hg-img"><img src="media/bis-bakery.webp" srcset="media/bis-bakery-s.webp 640w, media/bis-bakery.webp 1280w" sizes="(min-width: 900px) 52vw, 86vw" alt="Bakery table with dough and a wood-fired oven" loading="lazy" width="1280" height="800"></div><figcaption><span>03</span> Bakery. Knead, roll and bake.</figcaption></figure>
+            <figure class="hg-panel"><div class="hg-img"><img src="media/bis-workshop.webp" srcset="media/bis-workshop-s.webp 640w, media/bis-workshop.webp 1280w" sizes="(min-width: 900px) 52vw, 86vw" alt="Workshop with a flour mill and a cheese maker" loading="lazy" width="1280" height="800"></div><figcaption><span>04</span> Workshop. Mill flour, make cheese, churn ice cream.</figcaption></figure>
+            <figure class="hg-panel"><div class="hg-img"><img src="media/bis-supplier.webp" srcset="media/bis-supplier-s.webp 640w, media/bis-supplier.webp 1280w" sizes="(min-width: 900px) 52vw, 86vw" alt="Supplier screen listing proteins with prices in coins" loading="lazy" width="1280" height="800"></div><figcaption><span>05</span> Supplier. Spend coins on batches of four.</figcaption></figure>
+            <figure class="hg-panel"><div class="hg-img"><img src="media/bis-kitchen.webp" srcset="media/bis-kitchen-s.webp 576w, media/bis-kitchen.webp 1152w" sizes="(min-width: 900px) 52vw, 86vw" alt="Kitchen with a blender making a strawberry drink" loading="lazy" width="1152" height="720"></div><figcaption><span>06</span> Kitchen. Stack, blend and invent.</figcaption></figure>
+            <figure class="hg-panel"><div class="hg-img"><img src="media/bis-restaurant.webp" srcset="media/bis-restaurant-s.webp 576w, media/bis-restaurant.webp 1152w" sizes="(min-width: 900px) 52vw, 86vw" alt="Restaurant counter with a fox, a rabbit and a dinosaur customer and a burger" loading="lazy" width="1152" height="720"></div><figcaption><span>07</span> Restaurant. Serve your own inventions.</figcaption></figure>
+            <figure class="hg-panel"><div class="hg-img"><img src="media/bis-rewards.webp" srcset="media/bis-rewards-s.webp 576w, media/bis-rewards.webp 1152w" sizes="(min-width: 900px) 52vw, 86vw" alt="Three customers reacting happily to their orders" loading="lazy" width="1152" height="720"></div><figcaption><span>08</span> Rewards. An exact match pays the most.</figcaption></figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="device-row">
+        <div class="device" data-cursor="Watch">
+          <video class="lazy-video" muted loop playsinline preload="none" poster="media/bis-interface-poster.webp" data-src="media/bis-interface.mp4" aria-label="Interface walkthrough of the restaurant and farm screens"></video>
+        </div>
+        <div class="facts bis-facts">
+          <div class="fact"><span class="fact-num"><span data-count="444">444</span></span><span class="fact-label">automated checks passing in v0.9.0, 68 of them for the economy</span></div>
+          <div class="fact"><span class="fact-num sm">Godot 4.7.2</span><span class="fact-label">GDScript, 2D</span></div>
+          <div class="fact"><span class="fact-num sm">Android + Windows</span><span class="fact-label">APK driven by touch in the Android emulator (API 35)</span></div>
+        </div>
+      </div>
+      <p class="ai-note"><span class="ai-tag">AI</span> Characters, food and farm sprites were generated with an image model from written prompts. Later scenes and icons were drawn in SVG and GDScript.</p>
+    </section>
+
+    <!-- ============ 03 · MIMO GARDEN ============ -->
+    <section class="chapter mimo" data-theme="mimo" data-chapter="03" data-name="Mimo Garden" aria-labelledby="mimo-title">
+      <div class="ch-head">
+        <p class="eyebrow"><span class="ch-num">03</span> 3D creature game · Unity · Android tablets · v0.8.0, in development</p>
+        <h2 id="mimo-title" class="ch-title" data-split>Mimo Garden</h2>
+        <p class="ch-lede" data-reveal>A 3D game where children create little dumpling creatures and look after them: mix a recipe, watch it steam, meet whoever is born, then bathe, feed and play.</p>
+      </div>
+
+      <div class="story">
+        <div class="story-stage">
+          <ol class="story-steps">
+            <li class="is-active"><span>Mix</span> Pour a colour and stir with any finger movement.</li>
+            <li><span>Steam</span> The lid drops, steam rises.</li>
+            <li><span>Reveal</span> “Look who was born!”</li>
+            <li><span>Bathe</span> Foam from 3,072 bubbles, rinsed off with a shower.</li>
+            <li><span>Play</span> Up to five friends share the park.</li>
+          </ol>
+          <div class="story-frame">
+            <div class="story-frames">
+              <img src="media/mimo-r1-steamer.webp" srcset="media/mimo-r1-steamer-s.webp 640w, media/mimo-r1-steamer.webp 1280w" sizes="(min-width: 900px) 68vw, 100vw" alt="The empty bamboo steamer, ready for ingredients" loading="lazy" data-step="0" width="1280" height="800">
+              <img src="media/mimo-r2-pour.webp" srcset="media/mimo-r2-pour-s.webp 640w, media/mimo-r2-pour.webp 1280w" sizes="(min-width: 900px) 68vw, 100vw" alt="A colour bottle pouring into the steamer" loading="lazy" data-step="0" width="1280" height="800">
+              <img src="media/mimo-r3-mixed.webp" srcset="media/mimo-r3-mixed-s.webp 640w, media/mimo-r3-mixed.webp 1280w" sizes="(min-width: 900px) 68vw, 100vw" alt="The mixture stirred to a pastel colour" loading="lazy" data-step="0" width="1280" height="800">
+              <img src="media/mimo-r4-steam.webp" srcset="media/mimo-r4-steam-s.webp 640w, media/mimo-r4-steam.webp 1280w" sizes="(min-width: 900px) 68vw, 100vw" alt="The steamer closed and steaming" loading="lazy" data-step="1" width="1280" height="800">
+              <img src="media/mimo-r5-reveal.webp" srcset="media/mimo-r5-reveal-s.webp 640w, media/mimo-r5-reveal.webp 1280w" sizes="(min-width: 900px) 68vw, 100vw" alt="A new creature with butterfly wings revealed" loading="lazy" data-step="2" width="1280" height="800">
+              <img src="media/mimo-born.webp" srcset="media/mimo-born-s.webp 640w, media/mimo-born.webp 1280w" sizes="(min-width: 900px) 68vw, 100vw" alt="A surprise-mode creature with a crown and heart glasses" loading="lazy" data-step="2" width="1280" height="800">
+              <img src="media/mimo-r6-soap.webp" srcset="media/mimo-r6-soap-s.webp 640w, media/mimo-r6-soap.webp 1280w" sizes="(min-width: 900px) 68vw, 100vw" alt="The creature covered in soap bubbles" loading="lazy" data-step="3" width="1280" height="800">
+              <img src="media/mimo-r7-rinsed.webp" srcset="media/mimo-r7-rinsed-s.webp 640w, media/mimo-r7-rinsed.webp 1280w" sizes="(min-width: 900px) 68vw, 100vw" alt="The creature rinsed clean" loading="lazy" data-step="3" width="1280" height="800">
+              <img src="media/mimo-r8-play.webp" srcset="media/mimo-r8-play-s.webp 640w, media/mimo-r8-play.webp 1280w" sizes="(min-width: 900px) 68vw, 100vw" alt="Creatures playing in the park" loading="lazy" data-step="4" width="1280" height="800">
+            </div>
+            <div class="story-progress"><span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="squish-row">
+        <div class="squish-copy">
+          <p class="eyebrow">Materials</p>
+          <h3 class="sec-heading" data-split>Made to be squeezed.</h3>
+          <p data-reveal>Pearl, jelly, soft and glitter-gel finishes. In surprise mode the recipe nudges the odds: more milk leans toward pearl, jelly and glitter gel.</p>
+        </div>
+        <div class="squish-grid">
+          <figure class="sq sq-1" data-tilt data-cursor="Squish"><img src="media/mimo-close-pearl.webp" srcset="media/mimo-close-pearl-s.webp 640w, media/mimo-close-pearl.webp 1280w" sizes="(min-width: 900px) 30vw, 80vw" alt="Close-up of a pink pearl-finish creature" loading="lazy" width="1280" height="800"></figure>
+          <figure class="sq sq-2" data-tilt data-cursor="Squish"><img src="media/mimo-close-squish.webp" srcset="media/mimo-close-squish-s.webp 640w, media/mimo-close-squish.webp 1280w" sizes="(min-width: 900px) 30vw, 80vw" alt="A glitter-gel creature squished flat with happy eyes" loading="lazy" width="1280" height="800"></figure>
+          <figure class="sq sq-3" data-tilt data-cursor="Squish"><img src="media/mimo-close-soft.webp" srcset="media/mimo-close-soft-s.webp 640w, media/mimo-close-soft.webp 1280w" sizes="(min-width: 900px) 30vw, 80vw" alt="Close-up of a soft matte creature" loading="lazy" width="1280" height="800"></figure>
+          <figure class="sq sq-4 sq-video" data-cursor="Watch"><video class="lazy-video" muted loop playsinline preload="none" poster="media/mimo-glitter-poster.webp" data-src="media/mimo-glitter.mp4" aria-label="A glitter material moving under the light"></video></figure>
+        </div>
+      </div>
+
+      <div class="mimo-play">
+        <div class="mp-media" data-cursor="Watch">
+          <video class="lazy-video" muted loop playsinline preload="none" poster="media/mimo-play-poster.webp" data-src="media/mimo-play.mp4" aria-label="Creatures jumping and playing tag in the park"></video>
+        </div>
+        <div class="mp-side">
+          <figure class="mp-still" data-parallax="-0.12"><img src="media/mimo-friends.webp" srcset="media/mimo-friends-s.webp 452w, media/mimo-friends.webp 904w" sizes="(min-width: 900px) 26vw, 80vw" alt="Five creatures in a bamboo garden with a swing and a sofa" loading="lazy" width="904" height="800"></figure>
+          <figure class="mp-still" data-parallax="0.1"><img src="media/mimo-collections.webp" srcset="media/mimo-collections-s.webp 640w, media/mimo-collections.webp 1280w" sizes="(min-width: 900px) 26vw, 80vw" alt="Collections screen with three themed kits" loading="lazy" width="1280" height="800"></figure>
+        </div>
+      </div>
+
+      <div class="facts mimo-facts">
+        <div class="fact"><span class="fact-num sm">Unity 6 · URP</span><span class="fact-label">landscape tablets, Android</span></div>
+        <div class="fact"><span class="fact-num"><span data-count="28000">28,000</span></span><span class="fact-label">random draws tested for the surprise mode, across 59 checks</span></div>
+        <div class="fact"><span class="fact-num">30<small>–60</small></span><span class="fact-label">fps: the mobile profile scales scene resolution to stay above 30</span></div>
+        <div class="fact"><span class="fact-num">0</span><span class="fact-label">ads or real charges. Purchases go through a parents' area, and the test build uses a simulated store</span></div>
+      </div>
+      <p class="ai-note"><span class="ai-tag">AI</span> The environment, interface and some texture art were generated with ChatGPT's image tool. The creatures, toys and interactions are built in 3D in Unity.</p>
+    </section>
+
+    <!-- ============ 04 · DUMPLING SQUISH ============ -->
+    <section class="chapter dmp" data-theme="dmp" data-chapter="04" data-name="Dumpling Squish" aria-labelledby="dmp-title">
+      <div class="dmp-layout">
+        <div class="dmp-copy">
+          <p class="eyebrow"><span class="ch-num">04</span> Mobile game · in development</p>
+          <h2 id="dmp-title" class="ch-title" data-split>Dumpling Squish</h2>
+          <p class="ch-lede" data-reveal>It started with one question: does it make you want to squeeze it? Before any gameplay, a character study: a dumpling you can press, drag and spin, with a spring that makes it wobble back into shape.</p>
+          <ul class="spec-list" data-reveal>
+            <li><b>36,000</b> triangles in the final body, checked for open and non-manifold edges</li>
+            <li><b>150</b>-frame animation at 30 fps, made in Blender</li>
+            <li><b>Real time</b> squash and stretch in the browser with Three.js</li>
+          </ul>
+          <a class="btn btn-ghost" href="#top" data-magnetic data-cursor="Squish">Squish it at the top <span aria-hidden="true">↑</span></a>
+        </div>
+        <div class="dmp-visual">
+          <div class="dmp-orb" data-cursor="Watch">
+            <video class="lazy-video" muted loop playsinline preload="none" poster="media/dmp-loop-poster.webp" data-src="media/dmp-loop.mp4" aria-label="Rendered loop of the dumpling character blinking and bouncing"></video>
+          </div>
+          <img class="dmp-rabbit" src="media/dmp-rabbit.webp" alt="A variation of the character with rabbit ears" loading="lazy" data-parallax="-0.25" width="900" height="900">
+        </div>
+      </div>
+      <p class="ai-note"><span class="ai-tag">AI</span> The body's base shape was generated in Tripo Studio. Face, materials, shape keys and animation were done in Blender.</p>
+    </section>
+
+    <!-- ============ 05 · DESPERTAVERSO ============ -->
+    <section class="chapter dsp" data-theme="dsp" data-chapter="05" data-name="Despertaverso" aria-labelledby="dsp-title">
+      <canvas class="dsp-stars" aria-hidden="true"></canvas>
+      <div class="dsp-inner">
+        <p class="eyebrow"><span class="ch-num">05</span> Virtual-reality world · 2024 · Team lead</p>
+        <h2 id="dsp-title" class="ch-title dsp-title" data-split>Despertaverso</h2>
+        <p class="ch-lede" data-reveal>An entire virtual-reality world, built for a non-profit by a team of five that I led from concept and world design to launch.</p>
+        <div class="dsp-grid">
+          <div class="facts dsp-facts">
+            <div class="fact"><span class="fact-num"><span data-count="5">5</span></span><span class="fact-label">people on the team</span></div>
+            <div class="fact"><span class="fact-num"><span data-count="1">1</span></span><span class="fact-label">complete VR world</span></div>
+            <div class="fact"><span class="fact-num"><span data-count="3">3</span></span><span class="fact-label">cities where I presented it</span></div>
+          </div>
+          <figure class="dsp-map" aria-label="Talks in London, Lisbon and Madrid">
+            <svg viewBox="-12 -54 15 18" role="img" aria-hidden="true">
+              <defs>
+                <pattern id="dots" width="0.5" height="0.5" patternUnits="userSpaceOnUse"><circle cx="0.25" cy="0.25" r="0.045" /></pattern>
+              </defs>
+              <rect x="-12" y="-54" width="15" height="18" fill="url(#dots)" class="dsp-dots" />
+              <g class="dsp-grat">
+                <path d="M-12,-50H3M-12,-45H3M-12,-40H3M-10,-54V-36M-5,-54V-36M0,-54V-36" />
+              </g>
+              <g class="dsp-city c-lis"><circle cx="-9.14" cy="-38.72" r="0.32" /><circle class="pulse" cx="-9.14" cy="-38.72" r="0.32" /><text x="-9.14" y="-37.5">Lisbon</text></g>
+              <g class="dsp-city c-mad"><circle cx="-3.70" cy="-40.42" r="0.32" /><circle class="pulse" cx="-3.70" cy="-40.42" r="0.32" /><text x="-3.70" y="-39.2">Madrid</text></g>
+              <g class="dsp-city c-lon"><circle cx="-0.13" cy="-51.51" r="0.32" /><circle class="pulse" cx="-0.13" cy="-51.51" r="0.32" /><text x="-0.13" y="-52.3">London</text></g>
+            </svg>
+            <figcaption>Presented in talks in London, Lisbon and Madrid.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROCESS ============ -->
+    <section id="process" class="process" data-theme="ink" data-chapter="06" data-name="How I build" aria-labelledby="process-title">
+      <div class="process-head">
+        <p class="eyebrow">How I build</p>
+        <h2 id="process-title" class="big-heading" data-split>AI writes the code with me. <em>The game is my call.</em></h2>
+        <p class="process-lede" data-reveal>I build with AI coding tools: Codex, Claude, Cursor and Gemini. I write the design and the specifications, direct the build and test every release. Where art in a project is AI-generated, the project says so, and so does this page.</p>
+      </div>
+      <ol class="steps">
+        <li class="step" data-reveal><span class="step-num">01</span><h3>Design</h3><p>Rules, loops and feel, written down before any code: what the player does and what they should feel while doing it.</p></li>
+        <li class="step" data-reveal><span class="step-num">02</span><h3>Specify</h3><p>Every change becomes a written spec, along with the checks it has to pass.</p></li>
+        <li class="step" data-reveal><span class="step-num">03</span><h3>Direct</h3><p>AI tools build to the spec. I play the result and send it back until it is right.</p></li>
+        <li class="step" data-reveal><span class="step-num">04</span><h3>Verify</h3><p>Automated checks and real screen captures on each version, plus notes on what was <em>not</em> tested yet.</p></li>
+      </ol>
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <span>Unity · C#</span><span>Godot · GDScript</span><span>Three.js · WebGL</span><span>Blender</span><span>VRChat</span><span>WebRTC</span><span>JavaScript</span><span>Construct</span><span>Git</span><span>Sound design</span>
+          <span>Unity · C#</span><span>Godot · GDScript</span><span>Three.js · WebGL</span><span>Blender</span><span>VRChat</span><span>WebRTC</span><span>JavaScript</span><span>Construct</span><span>Git</span><span>Sound design</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about" class="about" data-theme="ink" data-chapter="07" data-name="About" aria-labelledby="about-title">
+      <div class="about-grid">
+        <div class="about-intro">
+          <p class="eyebrow">About</p>
+          <h2 id="about-title" class="big-heading" data-split>20+ years in software. <em>Games are where it all comes together.</em></h2>
+          <p data-reveal>I've worked in front-end, custom systems, support and team leadership. As a development team leader I ran a multidisciplinary team across development, 3D/VR content and marketing, and produced interactive 3D and VR content in Unity, Blender and VRChat. Today I own games end to end: design, systems, code, assets and release.</p>
+          <dl class="about-facts" data-reveal>
+            <div><dt>Based in</dt><dd>Itanhaém, São Paulo, Brazil</dd></div>
+            <div><dt>Work</dt><dd>Open to relocation · on-site, hybrid or remote</dd></div>
+            <div><dt>Languages</dt><dd>Portuguese (native) · English (advanced)</dd></div>
+          </dl>
+        </div>
+        <ol class="timeline">
+          <li data-reveal><span class="tl-year">2025 – now</span><span class="tl-role">Independent Game &amp; Web Developer</span><span class="tl-org">Freelance</span></li>
+          <li data-reveal><span class="tl-year">2023 – 2025</span><span class="tl-role">Development Team Leader</span><span class="tl-org">Lótus Company</span></li>
+          <li data-reveal><span class="tl-year">2020 – 2023</span><span class="tl-role">Game &amp; Web Developer</span><span class="tl-org">Freelance</span></li>
+          <li data-reveal><span class="tl-year">2019 – 2020</span><span class="tl-role">Front-end Developer</span><span class="tl-org">TS Lab · IoT &amp; Cloud Computing</span></li>
+          <li data-reveal><span class="tl-year">2014 – 2016</span><span class="tl-role">Front-end Developer</span><span class="tl-org">Mkt Virtual · supporting in-house game projects</span></li>
+          <li data-reveal><span class="tl-year">2003 – 2014</span><span class="tl-role">Support, teaching &amp; programming</span><span class="tl-org">ZF do Brasil · Infox · Compuway · Carrefour</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="contact" data-theme="ink" data-chapter="08" data-name="Contact" aria-labelledby="contact-title">
+      <p class="eyebrow">Contact</p>
+      <h2 id="contact-title" class="contact-title"><a href="mailto:brugohb@gmail.com" data-cursor="Write" aria-label="Email Humberto at brugohb@gmail.com"><span data-split>Let's make</span><br><em data-split>something squishy.</em></a></h2>
+      <div class="contact-links">
+        <a class="pill" href="mailto:brugohb@gmail.com" data-magnetic>brugohb@gmail.com</a>
+        <a class="pill" href="https://github.com/brugo" target="_blank" rel="noopener" data-magnetic>GitHub ↗</a>
+        <a class="pill" href="https://a-era-dos-herois.pages.dev/" target="_blank" rel="noopener" data-magnetic>Play A Era dos Heróis ↗</a>
+      </div>
+      <footer class="footer">
+        <span>© 2026 Humberto Valeriano Ferrante</span>
+        <span>This site was built with AI assistance under my direction, like the games on it.</span>
+        <a href="#top" data-magnetic>Back to top ↑</a>
+      </footer>
+    </section>
+  </main>
+
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/vendor/lenis.min.js"></script>
+  <script src="js/main.js"></script>
+  <script type="module" src="js/hero3d.js"></script>
+</body>
+</html>

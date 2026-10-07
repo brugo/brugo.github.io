@@ -1,0 +1,7 @@
+# Private notes and local tooling: never publish
+CLAUDE.md
+.claude/
+__pycache__/
+*.log
+.DS_Store
+Thumbs.db

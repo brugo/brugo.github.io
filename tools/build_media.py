@@ -22,9 +22,33 @@ BISTRO = os.path.join(DOCS, r"Codex\Food Kids\output")
 MIMO = os.path.join(DOCS, r"Codex\2026-09-28\eu-e\outputs")
 PREVIEW = os.path.join(MIMO, "MimoGardenPreview")
 CAPTURES = os.environ.get("PORTFOLIO_CAPTURES", "")
+CURATED = r"C:\Users\brugo\Desktop\Portfolio de Games"
+KOMBI = os.path.join(CURATED, "Cozy Kombi - modelo Blender")
+COZY = os.path.join(CURATED, r"CozyValley - Kombi e floresta\Capturas do jogo")
 
 # (output name, source path, full width, also make a half-size copy)
 IMAGES = [
+    # CozyValley + Cozy Kombi (Blender renders of the real model, Unity checks, game captures)
+    ("kombi-exterior", os.path.join(KOMBI, r"Renders do modelo\kombi-001--01_Exterior.png"), 1600, True),
+    ("kombi-cutaway", os.path.join(KOMBI, r"Renders do modelo\kombi-002--02_Cutaway.png"), 1600, True),
+    ("kombi-rear", os.path.join(KOMBI, r"Renders do modelo\kombi-003--03_RearPassenger.png"), 1600, True),
+    ("kombi-front", os.path.join(KOMBI, r"Renders do modelo\kombi-004--04_FrontPassenger.png"), 1600, True),
+    ("kombi-kitchen", os.path.join(KOMBI, r"Renders do modelo\kombi-005--05_KitchenCloseup.png"), 1600, True),
+    ("kombi-unity-driver", os.path.join(KOMBI, r"Validacao em Unity\kombi-006--Unity_Seat_0.png"), 1440, True),
+    ("kombi-unity-front", os.path.join(KOMBI, r"Validacao em Unity\kombi-007--Unity_Seat_1.png"), 1440, True),
+    ("kombi-unity-rear", os.path.join(KOMBI, r"Validacao em Unity\kombi-009--Unity_Seat_3.png"), 1440, True),
+    ("cozy-road", os.path.join(COZY, "cozy-all-168--p2_road_start.png"), 1600, True),
+    ("cozy-pines", os.path.join(COZY, "cozy-all-025--biome2_pinhal.png"), 1600, True),
+    ("cozy-autumn", os.path.join(COZY, "cozy-all-024--biome2_outono.png"), 1600, True),
+    ("cozy-lake", os.path.join(COZY, "cozy-all-163--p1_lake2.png"), 1600, True),
+    ("cozy-sunset", os.path.join(COZY, "cozy-all-058--day_sunset_west.png"), 1600, True),
+    ("cozy-night", os.path.join(COZY, "cozy-all-156--night_kombi2.png"), 1600, True),
+    ("cozy-drive", os.path.join(COZY, "cozy-all-064--drv_front.png"), 1600, True),
+    ("cozy-driver", os.path.join(COZY, "cozy-all-073--final_driver.png"), 1600, True),
+    ("cozy-fishing", os.path.join(COZY, "cozy-all-078--fish_cast.png"), 1600, True),
+    ("cozy-campfire", os.path.join(COZY, "cozy-all-149--m7_sit.png"), 1280, True),
+    ("cozy-cabin", os.path.join(COZY, "cozy-all-055--cabin_new.png"), 1600, True),
+    ("cozy-grass", os.path.join(COZY, "cozy-all-091--grass_v2_close.png"), 1600, True),
     # A Era dos Heróis
     ("aeh-table", os.path.join(CAPTURES, "tcg-table-hd.png"), 1600, True),
     ("aeh-battle", os.path.join(TCG, "background-entrada.jpg"), 1600, True),
@@ -87,8 +111,10 @@ def save_webp(im, path, quality):
     return os.path.getsize(path)
 
 
-def build_images():
+def build_images(prefix=""):
     for name, src, width, half in IMAGES:
+        if prefix and not name.startswith(prefix):
+            continue
         if not os.path.exists(src):
             print("MISSING", name, src)
             continue
@@ -133,6 +159,6 @@ if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     which = sys.argv[1] if len(sys.argv) > 1 else "all"
     if which in ("all", "images"):
-        build_images()
+        build_images(sys.argv[2] if len(sys.argv) > 2 else "")
     if which in ("all", "videos"):
         build_videos()

@@ -182,6 +182,7 @@
   /* ------------------------------------------------------------------ */
   const THEMES = {
     ink: { bg: '#0b0a0e', fg: '#f3eee6', accent: '#ff9ec4' },
+    cozy: { bg: '#efe4d2', fg: '#2a201b', accent: '#c8573a' },
     aeh: { bg: '#0d0907', fg: '#f1e6d2', accent: '#e0a94a' },
     bis: { bg: '#f4ecdb', fg: '#1e2a23', accent: '#2f7d6b' },
     mimo: { bg: '#e4efe7', fg: '#1c2a25', accent: '#e0705c' },
@@ -323,7 +324,7 @@
     const finalEl = $('.reel-final', reel);
     const finalChars = $$('.c', finalEl);
     const tc = $('.tc', reel);
-    const DEPTH = 10400;
+    const DEPTH = 12200;
     let p = 0;
     let mx = 0, my = 0, smx = 0, smy = 0;
     let finalShown = false;
@@ -364,7 +365,7 @@
 
     gsap.set(finalChars, { y: 0, yPercent: 110 });
     ScrollTrigger.create({
-      trigger: reel, start: 'top top', end: '+=520%', pin: true, scrub: true,
+      trigger: reel, start: 'top top', end: '+=600%', pin: true, scrub: true,
       onUpdate: self => { p = self.progress; render(); },
       onRefresh: self => { p = self.progress; render(); },
     });
@@ -651,17 +652,428 @@
   }
 
   /* ------------------------------------------------------------------ */
+  /* 01 · CozyValley                                                     */
+  /* ------------------------------------------------------------------ */
+
+  // Scrolling drives the Kombi 100 km through the game's five biomes.
+  function driveScene() {
+    const svg = $('.drive-scene');
+    if (!svg) return () => {};
+    const NS = 'http://www.w3.org/2000/svg';
+    const make = (tag, attrs = {}, parent = svg) => {
+      const n = document.createElementNS(NS, tag);
+      for (const k in attrs) n.setAttribute(k, attrs[k]);
+      parent.append(n);
+      return n;
+    };
+    let seed = 7;
+    const rand = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+    const TILE = 2000;
+    const PX_PER_KM = 170;
+
+    // Biome palettes: sky (top, middle, horizon), sun, five layers far→near, road.
+    const BIOMES = [
+      { name: 'Valley', sky: ['#f19f7f', '#f7c49d', '#fbe0bc'], layers: ['#cfa3a0', '#a68e98', '#6f8579', '#4b6a56', '#2c4434'], road: '#c99469' },
+      { name: 'Pine forest', sky: ['#e58566', '#f0b08a', '#f7d0a8'], layers: ['#b88c96', '#837389', '#4e635f', '#2c4a3f', '#192d26'], road: '#a97b59' },
+      { name: 'Plateau', sky: ['#eca566', '#f5cc8e', '#fce6bb'], layers: ['#d8b38f', '#c69c6e', '#aa8450', '#846737', '#584527'], road: '#c99961' },
+      { name: 'Autumn', sky: ['#dd6b4b', '#f0996a', '#f8c38d'], layers: ['#cb907e', '#b77259', '#9f5539', '#793b27', '#4a271b'], road: '#af7750' },
+      { name: 'Highlands', sky: ['#7b82b2', '#c798a6', '#efc1a0'], layers: ['#a59fbd', '#8683a3', '#676786', '#494c67', '#2b2e44'], road: '#8e7977' },
+    ];
+    // km keyframes: each biome holds, then blends over ~6 km like the game's 7 km mix.
+    const KEYS = [[0, 0], [13, 0], [19, 1], [33, 1], [39, 2], [55, 2], [61, 3], [77, 3], [83, 4], [100, 4]];
+    const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+    const mixHex = (a, b, t) => {
+      const A = hex(a), B = hex(b);
+      return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',')})`;
+    };
+    function weights(km) {
+      for (let i = 0; i < KEYS.length - 1; i++) {
+        const [k0, b0] = KEYS[i], [k1, b1] = KEYS[i + 1];
+        if (km <= k1) {
+          const t = k1 === k0 ? 0 : (km - k0) / (k1 - k0);
+          return { a: b0, b: b1, t: b0 === b1 ? 0 : t * t * (3 - 2 * t) };
+        }
+      }
+      return { a: 4, b: 4, t: 0 };
+    }
+
+    const defs = make('defs');
+    const sky = make('linearGradient', { id: 'drive-sky', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+    const skyStops = [0, 0.55, 1].map(o => make('stop', { offset: o }, sky));
+    const glow = make('radialGradient', { id: 'drive-sun' }, defs);
+    make('stop', { offset: 0, 'stop-color': '#fff6d6', 'stop-opacity': 0.95 }, glow);
+    make('stop', { offset: 0.35, 'stop-color': '#ffd9a0', 'stop-opacity': 0.45 }, glow);
+    make('stop', { offset: 1, 'stop-color': '#ffc690', 'stop-opacity': 0 }, glow);
+    make('rect', { x: -1000, y: 0, width: 4000, height: 1000, fill: 'url(#drive-sky)' });
+
+    const stars = make('g', { opacity: 0 });
+    for (let i = 0; i < 90; i++) make('circle', { cx: rand() * 2000, cy: rand() * 430, r: 0.8 + rand() * 1.8, fill: '#fff8ec' }, stars);
+    const sunG = make('g');
+    make('circle', { cx: 0, cy: 0, r: 300, fill: 'url(#drive-sun)' }, sunG);
+    const sunDisc = make('circle', { cx: 0, cy: 0, r: 66, fill: '#fff1cf' }, sunG);
+
+    const nameG = make('g', { class: 'biome-names' });
+    const names = BIOMES.map(b => make('text', { x: 1000, y: 520, 'text-anchor': 'middle', fill: '#fff8ee', opacity: 0 }, nameG));
+    names.forEach((t, i) => { t.textContent = BIOMES[i].name; });
+
+    function pine(x, y, h) {
+      const w = h * 0.46;
+      return `M${x - w / 2},${y}L${x},${y - h * 0.58}L${x + w / 2},${y}Z`
+        + `M${x - w * 0.4},${y - h * 0.3}L${x},${y - h * 0.82}L${x + w * 0.4},${y - h * 0.3}Z`
+        + `M${x - w * 0.27},${y - h * 0.56}L${x},${y - h}L${x + w * 0.27},${y - h * 0.56}Z`
+        + `M${x - h * 0.03},${y}h${h * 0.06}v${h * 0.06}h${-h * 0.06}Z`;
+    }
+    function hillsPath(cfg) {
+      const phases = cfg.k.map(() => rand() * Math.PI * 2);
+      const height = x => cfg.base - cfg.k.reduce((s, k, i) => s + cfg.a[i] * (0.5 + 0.5 * Math.sin((Math.PI * 2 * k * x) / TILE + phases[i])), 0);
+      let d = `M0,1000L0,${height(0).toFixed(1)}`;
+      for (let x = 20; x <= TILE; x += 20) d += `L${x},${height(x).toFixed(1)}`;
+      d += 'L2000,1000Z';
+      for (let i = 0; i < cfg.trees; i++) {
+        const x = rand() * TILE;
+        const h = cfg.size[0] + rand() * (cfg.size[1] - cfg.size[0]);
+        d += pine(x, height(x) + 4, h);
+      }
+      return d;
+    }
+    const LAYERS = [
+      { base: 640, a: [150, 60, 22], k: [2, 5, 11], trees: 0, size: [0, 0], speed: 0.05 },
+      { base: 700, a: [70, 30], k: [3, 7], trees: 50, size: [16, 30], speed: 0.14 },
+      { base: 770, a: [42, 16], k: [4, 9], trees: 120, size: [26, 52], speed: 0.3 },
+      { base: 852, a: [24, 10], k: [5, 12], trees: 70, size: [48, 96], speed: 0.56 },
+    ];
+    const layerGroups = LAYERS.map(cfg => {
+      const g = make('g');
+      const d = hillsPath(cfg);
+      make('path', { d }, g);
+      make('path', { d, transform: `translate(${TILE},0)` }, g);
+      return { g, cfg };
+    });
+
+    // Road with stones, kilometre signs on the far verge, then the van.
+    const road = make('g');
+    const roadBand = make('rect', { x: -1000, y: 872, width: 4000, height: 70 }, road);
+    const roadEdge = make('rect', { x: -1000, y: 872, width: 4000, height: 6, fill: 'rgba(40,25,15,.18)' }, road);
+    const stonesG = make('g', { fill: 'rgba(60,40,25,.28)' }, road);
+    let stonesD = '';
+    for (let i = 0; i < 70; i++) {
+      const x = rand() * TILE, y = 884 + rand() * 50, r = 2 + rand() * 5;
+      stonesD += `M${x - r},${y}a${r},${r * 0.6} 0 1,0 ${2 * r},0a${r},${r * 0.6} 0 1,0 ${-2 * r},0Z`;
+    }
+    make('path', { d: stonesD }, stonesG);
+    make('path', { d: stonesD, transform: `translate(${TILE},0)` }, stonesG);
+    const signs = [];
+    for (let k = 10; k <= 90; k += 10) {
+      const s = make('g', { class: 'sign' }, road);
+      make('rect', { x: -3, y: -64, width: 6, height: 66, fill: '#5a3e2b' }, s);
+      make('rect', { x: -34, y: -92, width: 68, height: 30, rx: 4, fill: '#f8eedd', stroke: '#5a3e2b', 'stroke-width': 3 }, s);
+      const t = make('text', { x: 0, y: -71, 'text-anchor': 'middle', fill: '#3a2a20' }, s);
+      t.textContent = `KM ${k}`;
+      signs.push({ el: s, k });
+    }
+
+    // The van stays centred in whatever slice of the 2000-wide scene the screen shows.
+    let VAN_SCALE = 1.35, VAN_X = 826;
+    const VAN_Y = 922;
+    const fitVan = () => {
+      const r = svg.getBoundingClientRect();
+      VAN_SCALE = r.width && r.width / r.height < 1 ? 0.92 : 1.35;
+      VAN_X = 1000 - 127 * VAN_SCALE;
+    };
+    fitVan();
+    addEventListener('resize', fitVan);
+    const van = make('g');
+    make('ellipse', { cx: 125, cy: 4, rx: 140, ry: 9, fill: 'rgba(30,18,10,.25)' }, van);
+    const body = make('g', {}, van);
+    // roof load
+    make('rect', { x: 66, y: -184, width: 62, height: 26, rx: 5, fill: '#6fa39a' }, body);
+    make('rect', { x: 140, y: -176, width: 58, height: 18, rx: 9, fill: '#f4dfbf' }, body);
+    make('path', { d: 'M40,-158H214M52,-158v-10M118,-158v-10M190,-158v-10', stroke: '#6b5446', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, body);
+    // shell: cream top, terracotta bottom
+    make('path', { d: 'M8,-150Q8,-158 18,-158H222Q238,-158 241,-142L246,-96H6Z', fill: '#f5e6cc' }, body);
+    make('path', { d: 'M6,-96H246L248,-58Q248,-40 232,-40H18Q6,-40 6,-52Z', fill: '#d4673f' }, body);
+    make('path', { d: 'M6,-97H246', stroke: '#fbf2e2', 'stroke-width': 4 }, body);
+    make('path', { d: 'M150,-94V-44', stroke: '#a94d2d', 'stroke-width': 2 }, body);
+    make('rect', { x: 120, y: -78, width: 18, height: 4, rx: 2, fill: '#f5e6cc' }, body);
+    // windows
+    [[18, 54], [80, 54], [142, 46]].forEach(([x, w]) => make('rect', { x, y: -146, width: w, height: 38, rx: 6, fill: '#3b4252' }, body));
+    make('path', { d: 'M198,-146H230Q236,-146 238,-138L242,-108H198Z', fill: '#3b4252' }, body);
+    make('path', { d: 'M28,-112L48,-144M90,-112L112,-144M206,-112L224,-144', stroke: 'rgba(255,255,255,.22)', 'stroke-width': 5 }, body);
+    make('circle', { cx: 238, cy: -70, r: 8, fill: '#fff4d8' }, body);
+    make('rect', { x: -2, y: -46, width: 254, height: 8, rx: 4, fill: '#f5e6cc' }, body);
+    const wheels = [52, 196].map(cx => {
+      make('circle', { cx, cy: -28, r: 32, fill: '#a94d2d' }, van);
+      const w = make('g', {}, van);
+      make('circle', { cx, cy: -26, r: 26, fill: '#2b2729' }, w);
+      make('circle', { cx, cy: -26, r: 13, fill: '#f0e2c8' }, w);
+      [0, 90, 180, 270].forEach(a => make('circle', { cx: cx + 8 * Math.cos(a * Math.PI / 180), cy: -26 + 8 * Math.sin(a * Math.PI / 180), r: 2.2, fill: '#2b2729' }, w));
+      make('circle', { cx, cy: -26, r: 3.5, fill: '#d4673f' }, w);
+      return { w, cx };
+    });
+    const puffs = make('g', { fill: 'rgba(255,248,236,.55)' }, van);
+    const puffDots = [0, 1, 2].map(() => make('circle', { cx: 0, cy: -48, r: 6 }, puffs));
+
+    // Foreground: big dark pines that whip past faster than the road.
+    const fore = { g: make('g'), cfg: { base: 1000, a: [12, 6], k: [6, 13], trees: 6, size: [170, 300], speed: 1.45 } };
+    const fd = hillsPath(fore.cfg);
+    make('path', { d: fd }, fore.g);
+    make('path', { d: fd, transform: `translate(${TILE},0)` }, fore.g);
+
+    const hud = $('.drive-hud');
+    const hudNum = $('.hud-num');
+    const hudBiome = $('.hud-biome');
+    const copy = $('.drive-copy');
+    const hint = $('.drive-hint');
+    let shownBiome = 'Valley';
+
+    return function render(p) {
+      const km = clamp(p, 0, 1) * 100;
+      const { a, b, t } = weights(km);
+      const A = BIOMES[a], B = BIOMES[b];
+      skyStops.forEach((s, i) => s.setAttribute('stop-color', mixHex(A.sky[i], B.sky[i], t)));
+      const dist = km * PX_PER_KM;
+      layerGroups.forEach(({ g, cfg }, i) => {
+        g.setAttribute('fill', mixHex(A.layers[i], B.layers[i], t));
+        g.setAttribute('transform', `translate(${-((dist * cfg.speed) % TILE)},0)`);
+      });
+      fore.g.setAttribute('fill', mixHex(A.layers[4], B.layers[4], t));
+      fore.g.setAttribute('transform', `translate(${-((dist * fore.cfg.speed) % TILE)},0)`);
+      roadBand.setAttribute('fill', mixHex(A.road, B.road, t));
+      stonesG.setAttribute('transform', `translate(${-(dist % TILE)},0)`);
+      signs.forEach(s => {
+        const x = VAN_X + 420 + (s.k - km) * PX_PER_KM;
+        s.el.setAttribute('transform', `translate(${x.toFixed(1)},878)`);
+        s.el.style.display = x > -300 && x < 2300 ? '' : 'none';
+      });
+      const sunY = 300 + km * 4.4;
+      sunG.setAttribute('transform', `translate(1260,${sunY.toFixed(1)})`);
+      sunDisc.setAttribute('fill', mixHex('#fff3cc', '#ff9b6b', clamp(km / 100, 0, 1)));
+      stars.setAttribute('opacity', clamp((km - 80) / 16, 0, 1).toFixed(3));
+      names.forEach((n, i) => {
+        const w = i === a ? 1 - t : 0 + (i === b ? t : 0);
+        n.setAttribute('opacity', (w * 0.2).toFixed(3));
+      });
+      const bounce = Math.sin(km * 37) * 1.6 + Math.sin(km * 91) * 0.8;
+      van.setAttribute('transform', `translate(${VAN_X},${VAN_Y}) scale(${VAN_SCALE})`);
+      body.setAttribute('transform', `translate(0,${bounce.toFixed(2)})`);
+      const spin = (dist / (2 * Math.PI * 26)) * 360;
+      wheels.forEach(({ w, cx }) => w.setAttribute('transform', `rotate(${(spin % 360).toFixed(1)} ${cx} -26)`));
+      puffDots.forEach((c, i) => {
+        const ph = ((km * 6 + i / 3) % 1);
+        c.setAttribute('cx', (-6 - ph * 70).toFixed(1));
+        c.setAttribute('cy', (-48 - ph * 26).toFixed(1));
+        c.setAttribute('r', (5 + ph * 12).toFixed(1));
+        c.setAttribute('opacity', (km > 0.05 ? 1 - ph : 0).toFixed(2));
+      });
+      hudNum.textContent = km.toFixed(1).padStart(5, '0');
+      hud.style.setProperty('--km', `${km.toFixed(2)}%`);
+      const label = t > 0.5 ? B.name : A.name;
+      if (label !== shownBiome) {
+        shownBiome = label;
+        gsap.fromTo(hudBiome, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out', onStart: () => { hudBiome.textContent = label; } });
+      }
+      copy.style.opacity = (1 - clamp((p - 0.1) / 0.1, 0, 1)).toFixed(3);
+      copy.style.transform = `translateY(${(-clamp((p - 0.1) / 0.1, 0, 1) * 40).toFixed(1)}px)`;
+      hud.style.opacity = clamp((p - 0.06) / 0.08, 0, 1).toFixed(3);
+      hint.style.opacity = (1 - clamp(p / 0.06, 0, 1)).toFixed(3);
+    };
+  }
+
+  // Frame sequences rendered from the real .blend, drawn on canvas as you scroll.
+  function sequencePlayer(canvas) {
+    const name = canvas.dataset.seq;
+    const n = Number(canvas.dataset.frames);
+    const small = innerWidth < 700;
+    const url = i => `media/seq/${name}${small ? '-s' : ''}/${name}-${String(i).padStart(2, '0')}.webp`;
+    const imgs = new Array(n);
+    const ctx = canvas.getContext('2d');
+    let wanted = 0, drawn = -1, started = false;
+
+    function paint(k) {
+      const img = imgs[k];
+      const cw = canvas.width, ch = canvas.height;
+      const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
+      const w = img.naturalWidth * s, h = img.naturalHeight * s;
+      ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+      drawn = k;
+    }
+    function draw(f, force = false) {
+      wanted = Math.round(clamp(f, 0, n - 1));
+      for (let d = 0; d < n; d++) {
+        for (const k of [wanted - d, wanted + d]) {
+          const img = imgs[k];
+          if (img && img.complete && img.naturalWidth) {
+            if (k !== drawn || force) paint(k);
+            return;
+          }
+        }
+      }
+    }
+    function resize() {
+      const r = canvas.getBoundingClientRect();
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      canvas.width = Math.max(1, Math.round(r.width * dpr));
+      canvas.height = Math.max(1, Math.round(r.height * dpr));
+      if (drawn >= 0) draw(wanted, true);
+    }
+    function load() {
+      if (started) return;
+      started = true;
+      // Coarse frames first, then fill the gaps, so scrubbing works early.
+      const order = [];
+      for (const step of [8, 4, 2, 1]) for (let i = 0; i < n; i += step) if (!order.includes(i)) order.push(i);
+      order.forEach(i => {
+        const img = new Image();
+        img.decoding = 'async';
+        img.onload = () => {
+          if (drawn < 0) { canvas.classList.add('is-ready'); draw(wanted, true); }
+          else if (Math.abs(i - wanted) < Math.abs(drawn - wanted)) draw(wanted, true);
+        };
+        img.src = url(i);
+        imgs[i] = img;
+      });
+    }
+    new IntersectionObserver(([e]) => { if (e.isIntersecting) load(); }, { rootMargin: '1600px 0px' }).observe(canvas);
+    new ResizeObserver(resize).observe(canvas);
+    resize();
+    return { draw, n };
+  }
+
+  function cozyScenes() {
+    const render = driveScene();
+    render(0);
+    ScrollTrigger.create({
+      trigger: '.drive', start: 'top top', end: '+=380%', pin: true, scrub: 0.6,
+      onUpdate: self => render(self.progress),
+    });
+
+    const turn = sequencePlayer($('.turn .seq'));
+    const turnWord = $('.turn-word span');
+    ScrollTrigger.create({
+      trigger: '.turn', start: 'top top', end: '+=190%', pin: true, scrub: 0.4,
+      onUpdate: self => {
+        turn.draw(self.progress * (turn.n - 1));
+        turnWord.style.transform = `translateX(${(-self.progress * 38).toFixed(2)}%)`;
+      },
+    });
+    gsap.from('.turn-specs li', {
+      opacity: 0, x: 30, duration: 1, ease: 'expo.out', stagger: 0.12,
+      scrollTrigger: { trigger: '.turn', start: 'top 40%', once: true },
+    });
+    gsap.fromTo('.turn-frame', { scale: 0.86, rotate: -2 }, {
+      scale: 1, rotate: 0, ease: 'none',
+      scrollTrigger: { trigger: '.turn', start: 'top bottom', end: 'top top', scrub: true },
+    });
+
+    const explode = sequencePlayer($('.explode .seq'));
+    const items = $$('.explode-list li');
+    ScrollTrigger.create({
+      trigger: '.explode', start: 'top top', end: '+=210%', pin: true, scrub: 0.4,
+      onUpdate: self => {
+        const p = self.progress;
+        explode.draw(clamp((p - 0.05) / 0.85, 0, 1) * (explode.n - 1));
+        items.forEach(li => li.classList.toggle('is-on', p >= Number(li.dataset.at)));
+      },
+    });
+
+    // Interior: a slow camera move through four renders.
+    const frames = $$('.cabin-frames img');
+    const caps = $$('.cabin-captions li');
+    const bar = $('.cabin-progress span');
+    const F = frames.length;
+    let activeCap = 0;
+    function renderCabin(p) {
+      const f = p * (F - 1);
+      const seg = Math.floor(f), local0 = f - seg;
+      frames.forEach((img, i) => {
+        // Each view holds, then the next one fades in over the last third of the segment.
+        let o = i <= seg ? 1 : 0;
+        if (i === seg + 1) o = clamp((local0 - 0.66) / 0.34, 0, 1);
+        const local = clamp(f - i + 1, 0, 2) / 2;
+        img.style.opacity = o.toFixed(3);
+        img.style.transform = `scale(${(1.16 - local * 0.12).toFixed(4)}) translateX(${((local - 0.5) * -3).toFixed(2)}%)`;
+      });
+      const cap = Math.min(F - 1, local0 > 0.83 ? seg + 1 : seg);
+      if (cap !== activeCap) {
+        activeCap = cap;
+        caps.forEach((li, i) => li.classList.toggle('is-active', i === cap));
+      }
+      bar.style.transform = `scaleX(${p.toFixed(4)})`;
+    }
+    renderCabin(0);
+    ScrollTrigger.create({
+      trigger: '.cabin', start: 'top top', end: '+=280%', pin: true, scrub: 0.5,
+      onUpdate: self => renderCabin(self.progress),
+    });
+
+    $$('.trip-col').forEach(col => {
+      const s = Number(col.dataset.speed);
+      gsap.fromTo(col, { yPercent: -s * 60 }, {
+        yPercent: s * 60, ease: 'none',
+        scrollTrigger: { trigger: '.trip-cols', start: 'top bottom', end: 'bottom top', scrub: true },
+      });
+    });
+    gsap.from('.unity-grid figure', {
+      y: 60, opacity: 0, duration: 1.2, ease: 'expo.out', stagger: 0.12,
+      scrollTrigger: { trigger: '.unity-grid', start: 'top 85%', once: true },
+    });
+  }
+
+  // Wireframe / render comparison: the visitor drags it; until then, scroll sweeps it.
+  function compareScene() {
+    const box = $('.compare');
+    if (!box) return;
+    const handle = $('.compare-handle', box);
+    let touched = false;
+    const set = v => {
+      const pct = clamp(v, 0, 100);
+      box.style.setProperty('--pos', `${pct.toFixed(2)}%`);
+      handle.setAttribute('aria-valuenow', String(Math.round(pct)));
+    };
+    const fromEvent = e => {
+      const r = box.getBoundingClientRect();
+      set(((e.clientX - r.left) / r.width) * 100);
+    };
+    let dragging = false;
+    box.addEventListener('pointerdown', e => { dragging = true; touched = true; fromEvent(e); });
+    addEventListener('pointermove', e => { if (dragging) fromEvent(e); });
+    addEventListener('pointerup', () => { dragging = false; });
+    handle.addEventListener('keydown', e => {
+      const now = Number(handle.getAttribute('aria-valuenow'));
+      if (e.key === 'ArrowLeft') { touched = true; set(now - 5); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { touched = true; set(now + 5); e.preventDefault(); }
+    });
+    set(reduced ? 50 : 88);
+    if (!reduced) {
+      ScrollTrigger.create({
+        trigger: box, start: 'top 85%', end: 'bottom 35%', scrub: true,
+        onUpdate: self => { if (!touched) set(88 - self.progress * 76); },
+      });
+    }
+  }
+
+  function cozyStatic() {
+    const render = driveScene();
+    render(0);
+    const poster = $('.explode .seq-poster');
+    if (poster) poster.src = 'media/seq/explode/explode-39.webp';
+  }
+
+  /* ------------------------------------------------------------------ */
   /* Boot                                                                */
   /* ------------------------------------------------------------------ */
   if (!reduced) {
     heroScene();
     reelScene();
+    cozyScenes();
     aehScenes();
     bistroScenes();
     mimoScenes();
     dumplingScenes();
     processScenes();
   }
+  if (reduced) cozyStatic();
+  compareScene();
   despertaversoScene();
   revealHeadings();
   pointerToys();
@@ -670,7 +1082,7 @@
   $$('section[data-theme]').forEach(section => {
     const spacer = section.parentElement.classList.contains('pin-spacer') ? section.parentElement : section;
     ScrollTrigger.create({
-      trigger: spacer, start: 'top 55%', end: 'bottom 55%',
+      trigger: spacer, start: section.dataset.themeStart || 'top 55%', end: 'bottom 55%',
       onToggle: self => { if (self.isActive) { setTheme(section.dataset.theme); setChapter(section); } },
     });
   });

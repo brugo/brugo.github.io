@@ -2,10 +2,11 @@
 
 Portfolio site: **https://brugo.github.io/**
 
-Five projects, shown with the motion they were built for:
+Six projects, shown with the motion they were built for:
 
 | Project | What it is | Built with |
 | --- | --- | --- |
+| **CozyValley** (in development) | Co-op road-trip game: drive a Kombi 100 km through five biomes. The van was modelled with Python scripts in Blender | Unity 6, Netcode, Blender 5.2 |
 | **A Era dos Heróis** (alpha) | Co-operative browser card game for up to four players. Co-created with Neto. [Play it](https://a-era-dos-herois.pages.dev/) | JavaScript, WebRTC (peer-to-peer) |
 | **Bistrô dos Pequenos** (v0.9.0) | Kids' restaurant-and-farm game for Android and Windows | Godot 4.7.2, GDScript |
 | **Mimo Garden** (v0.8.0, in development) | 3D creature game for Android tablets | Unity 6, URP |
@@ -18,6 +19,8 @@ A single static page with no build step:
 
 - **GSAP + ScrollTrigger** for the scroll scenes: a 3D fly-through of the work, a rotating ring of hero cards, a video that opens to full screen, a horizontal gallery and a frame-by-frame storyboard.
 - **Lenis** for smooth scrolling.
+- **Canvas frame sequences** for the Kombi: a 360° turntable and an exploded view rendered from the real .blend (`tools/render_kombi.py`), plus a wireframe comparison and single parts.
+- **SVG drawn in code** for the 100 km drive: five biome palettes, parallax layers and kilometre signs.
 - **Three.js** for the hero: the real dumpling model from the character study, with spring-based squash and stretch. Press and hold it.
 - Media is converted to WebP and short silent MP4 loops by `tools/build_media.py`, and loaded only when it gets close to the screen. `tools/optimize_glb.py` brings the 3D model from 2.5 MB to 0.75 MB.
 - Respects `prefers-reduced-motion`, with a visible switch to turn motion on or off.

@@ -25,6 +25,7 @@ CAPTURES = os.environ.get("PORTFOLIO_CAPTURES", "")
 CURATED = r"C:\Users\brugo\Desktop\Portfolio de Games"
 KOMBI = os.path.join(CURATED, "Cozy Kombi - modelo Blender")
 COZY = os.path.join(CURATED, r"CozyValley - Kombi e floresta\Capturas do jogo")
+COZY_SHOTS = r"C:\Users\brugo\Documents\Projetos Games Claude\CozyValley\Screenshots"
 
 # (output name, source path, full width, also make a half-size copy)
 IMAGES = [
@@ -45,8 +46,9 @@ IMAGES = [
     ("cozy-night", os.path.join(COZY, "cozy-all-156--night_kombi2.png"), 1600, True),
     ("cozy-drive", os.path.join(COZY, "cozy-all-064--drv_front.png"), 1600, True),
     ("cozy-driver", os.path.join(COZY, "cozy-all-073--final_driver.png"), 1600, True),
-    ("cozy-fishing", os.path.join(COZY, "cozy-all-078--fish_cast.png"), 1600, True),
-    ("cozy-campfire", os.path.join(COZY, "cozy-all-149--m7_sit.png"), 1280, True),
+    # Right half only: the map panel on the left has an overlapping label and a dev FPS chip.
+    ("cozy-radar", os.path.join(COZY_SHOTS, "radar", "radar_final.png"), 640, True, (640, 50, 1280, 660)),
+    ("cozy-fire", os.path.join(COZY_SHOTS, "ui8_boiled.png"), 1280, True),
     ("cozy-cabin", os.path.join(COZY, "cozy-all-055--cabin_new.png"), 1600, True),
     ("cozy-grass", os.path.join(COZY, "cozy-all-091--grass_v2_close.png"), 1600, True),
     # A Era dos Heróis
@@ -112,13 +114,17 @@ def save_webp(im, path, quality):
 
 
 def build_images(prefix=""):
-    for name, src, width, half in IMAGES:
+    for entry in IMAGES:
+        name, src, width, half = entry[:4]
+        crop = entry[4] if len(entry) > 4 else None
         if prefix and not name.startswith(prefix):
             continue
         if not os.path.exists(src):
             print("MISSING", name, src)
             continue
         im = Image.open(src)
+        if crop:
+            im = im.crop(crop)
         im = im.convert("RGBA" if im.mode in ("RGBA", "LA", "P") else "RGB")
         if im.mode == "RGBA" and im.getextrema()[3][0] == 255:
             im = im.convert("RGB")
